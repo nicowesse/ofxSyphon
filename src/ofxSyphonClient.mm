@@ -8,8 +8,10 @@
  */
 
 #include "ofxSyphonClient.h"
+#ifdef TARGET_OSX
 #import <Syphon/Syphon.h>
 #import "SyphonNameboundClient.h"
+#endif
 
 ofxSyphonClient::ofxSyphonClient() :
 width(0), height(0), bSetup(false)
@@ -19,9 +21,11 @@ width(0), height(0), bSetup(false)
 
 void ofxSyphonClient::setup()
 {
+#ifdef TARGET_OSX
     @autoreleasepool {
         mClient = ofxSNOMake([[SyphonNameboundClient alloc] initWithContext:CGLGetCurrentContext()]);
     }
+#endif
 	bSetup = true;
 }
 
@@ -36,6 +40,7 @@ void ofxSyphonClient::set(ofxSyphonServerDescription _server){
 void ofxSyphonClient::set(const std::string &_serverName, const std::string &_appName){
     if(bSetup)
     {
+#ifdef TARGET_OSX
         @autoreleasepool {
             NSString *nsAppName = [NSString stringWithCString:_appName.c_str() encoding:[NSString defaultCStringEncoding]];
             NSString *nsServerName = [NSString stringWithCString:_serverName.c_str() encoding:[NSString defaultCStringEncoding]];
@@ -46,6 +51,7 @@ void ofxSyphonClient::set(const std::string &_serverName, const std::string &_ap
             appName = _appName;
             serverName = _serverName;
         }
+#endif
     }
 }
 
@@ -53,6 +59,7 @@ void ofxSyphonClient::setApplicationName(const std::string &_appName)
 {
     if(bSetup)
     {
+#ifdef TARGET_OSX
         @autoreleasepool {
             NSString *name = [NSString stringWithCString:_appName.c_str() encoding:[NSString defaultCStringEncoding]];
             
@@ -60,6 +67,7 @@ void ofxSyphonClient::setApplicationName(const std::string &_appName)
             
             appName = _appName;
         }
+#endif
     }
     
 }
@@ -67,6 +75,7 @@ void ofxSyphonClient::setServerName(const std::string &_serverName)
 {
     if(bSetup)
     {
+#ifdef TARGET_OSX
         @autoreleasepool {
             NSString *name = [NSString stringWithCString:_serverName.c_str() encoding:[NSString defaultCStringEncoding]];
 
@@ -77,6 +86,7 @@ void ofxSyphonClient::setServerName(const std::string &_serverName)
             
             serverName = _serverName;
         }
+#endif
     }
 }
 
@@ -92,6 +102,7 @@ void ofxSyphonClient::bind()
 {
     if(bSetup)
     {
+#ifdef TARGET_OSX
         @autoreleasepool {
             [(SyphonNameboundClient*)ofxSNOGet(mClient) lockClient];
            SyphonOpenGLClient *client = [(SyphonNameboundClient*)ofxSNOGet(mClient) client];
@@ -118,6 +129,7 @@ void ofxSyphonClient::bind()
            
            mTex.bind();
         }
+#endif
     }
     else
 		cout<<"ofxSyphonClient is not setup, or is not properly connected to server.  Cannot bind.\n";
@@ -127,11 +139,13 @@ void ofxSyphonClient::unbind()
 {
     if(bSetup)
     {
+#ifdef TARGET_OSX
         mTex.unbind();
         @autoreleasepool {
             [(SyphonNameboundClient*)ofxSNOGet(mClient) unlockClient];
             latestImage = ofxSyphonNSObject();
         }
+#endif
     }
     else
 		cout<<"ofxSyphonClient is not setup, or is not properly connected to server.  Cannot unbind.\n";

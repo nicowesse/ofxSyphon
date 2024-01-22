@@ -16,10 +16,12 @@ ofxSyphonNSObject::ofxSyphonNSObject()
 ofxSyphonNSObject::~ofxSyphonNSObject()
 {
     // This can be called from C++ with no autorelease pool in place, so we need one
+    #ifdef TARGET_OSX
     @autoreleasepool {
         // Do this explicitely here to force ARC release
         mObject = nil;
     }
+    #ifdef TARGET_OSX
 }
 
 ofxSyphonNSObject::ofxSyphonNSObject(const ofxSyphonNSObject &o)
