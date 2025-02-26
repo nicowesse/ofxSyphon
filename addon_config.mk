@@ -4,9 +4,12 @@ linux64:
 	ADDON_SOURCES =
 
 vs:
-	ADDON_SOURCES_EXCLUDE = libs/%
+	ADDON_SOURCES_EXCLUDE = libs/% src/%.mm
+	ADDON_SOURCES_EXCLUDE += src/ofxSyphonClient.h
+	ADDON_SOURCES_EXCLUDE += src/ofxSyphonNSObject.h
+	ADDON_SOURCES_EXCLUDE += src/ofxSyphonServer.h
+	ADDON_SOURCES_EXCLUDE += src/ofxSyphonServerDirectory.h
 	ADDON_INCLUDES_EXCLUDE = libs/%
-	ADDON_SOURCES =
 
 linuxarmv6l:
 	ADDON_SOURCES_EXCLUDE = libs/%
