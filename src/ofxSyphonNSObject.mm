@@ -21,7 +21,7 @@ ofxSyphonNSObject::~ofxSyphonNSObject()
         // Do this explicitely here to force ARC release
         mObject = nil;
     }
-    #ifdef TARGET_OSX
+    #endif
 }
 
 ofxSyphonNSObject::ofxSyphonNSObject(const ofxSyphonNSObject &o)
